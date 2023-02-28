@@ -1,6 +1,8 @@
 import React, { useState , useCallback } from 'react';
 import App from './App';
 import firebase from './firebase';
+import SignUp from './signup';
+
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -39,8 +41,6 @@ const Login = () => {
         console.log(errorCode, errorMessage);
       });
     };
-
-
 
       return (
         <div>
