@@ -4,20 +4,42 @@ import firebase from './firebase';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [user, setUser] = useState(null);
 
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      firebase.auth().signInWithEmailAndPassword(email, password)
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    firebase.auth().signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
+        setEmail('');
+        setPassword('');
       })
+
+      firebase.database().ref('users/' + user.uid).set({
+        email: email,
+        password: password
+      })
+      .then(() => {
+        console.log('Dane wysłane pomyślnie!');
+      })
+      .catch((error) => {
+        console.error('Error podczas wysyłania danych:', error);
+      });
+
+      firebase.database().ref('users/' + user.uid).set({
+        email: email,
+        password: password
+      })
+
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
       });
     };
+
+
 
       return (
         <div>
