@@ -1,5 +1,7 @@
 import React, { useState, useCallback } from 'react';
-import App from './App';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+
 
 const SignUp = ({ history }) => {
   const [email, setEmail] = useState('');
@@ -9,10 +11,10 @@ const SignUp = ({ history }) => {
     async (event) => {
       event.preventDefault();
       try {
-        await App.auth().createUserWithEmailAndPassword(email, password);
-        history.push("/");
+        await firebase.auth().createUserWithEmailAndPassword(email, password);
+        history.push('/');
       } catch (error) {
-        alert(error);
+        alert('Make sure your email and password is correct');
       }
     },
     [email, password, history]
