@@ -72,4 +72,10 @@ form {
     font-size: 1.2rem;
     margin-top: 1rem;
 }
-  
+
+.signup {
+    background-color: #0099ff;
+    position: absolute;
+    margin-left: 908px;
+    margin-top: 590px;
+}

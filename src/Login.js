@@ -17,26 +17,19 @@ const Login = () => {
         console.log(user);
         setEmail('');
         setPassword('');
+        firebase.database().ref('users/' + user.uid).set({
+          email: email,
+          password: password
+        });
       })
-
       .then(() => {
         console.log('Dane wysłane pomyślnie!');
       })
       .catch((error) => {
-        console.error('Error podczas wysyłania danych:', error);
+        console.error('Błąd podczas wysyłania danych:', error);
+        alert('Nieprawidłowy e-mail lub hasło, spróbuj ponownie.');
       });
-
-      firebase.database().ref('users/' + user.uid).set({
-        email: email,
-        password: password
-      })
-
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-      });
-    }, [email, password, user]);
+  }, [email, password]);
 
   return (
     <div className="login-container">
