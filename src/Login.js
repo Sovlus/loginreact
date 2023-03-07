@@ -8,6 +8,8 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [user, setUser] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [okMessage, setOkMessage] = useState(null);
 
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
@@ -17,19 +19,23 @@ const Login = () => {
         console.log(user);
         setEmail('');
         setPassword('');
-        firebase.database().ref('users/' + user.uid).set({
-          email: email,
-          password: password
-        });
-      })
-      .then(() => {
-        console.log('Dane wysłane pomyślnie!');
+        setErrorMessage(null);
+        setOkMessage('Zalogowano pomyślnie'); 
       })
       .catch((error) => {
         console.error('Błąd podczas wysyłania danych:', error);
-        alert('Nieprawidłowy e-mail lub hasło, spróbuj ponownie.');
+        setErrorMessage('Nieprawidłowy e-mail lub hasło, sporóbuj ponownie.');
       });
   }, [email, password]);
+
+  const handlePasswordVisibility = useCallback(() => {
+    const passwordInput = document.getElementById('password-input');
+    if (passwordInput.type === 'password') {
+      passwordInput.type = 'text';
+    } else {
+      passwordInput.type = 'password';
+    }
+  }, []);
 
   return (
     <div className="login-container">
@@ -40,10 +46,12 @@ const Login = () => {
           <input className="form-input" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
         </div>
         <div className="form-group">
-          <label className="form-label">Password</label>
-          <input className="form-input" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
+          <label className="form-label">Password</label><i className="fas fa-eye password-icon" onClick={handlePasswordVisibility}></i>
+          <input id="password-input" className="form-input" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password"/>
         </div>
         <button className="login-button" type="submit">Login</button>
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
+        {okMessage && <div className="ok-message">{okMessage}</div>}
       </form>
     </div>
   );

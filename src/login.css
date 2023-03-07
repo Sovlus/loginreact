@@ -75,7 +75,29 @@ form {
 
 .signup {
     background-color: #0099ff;
-    position: absolute;
+    position: relative;
     margin-left: 908px;
     margin-top: 590px;
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 28px;
+}
+
+.Ok-message {
+  color: green;
+  font-size: 14px;
+  margin-top: 28px;
+}
+
+i:hover {
+  color: green;
+}
+
+i {
+  position: absolute;
+  margin-top: 40px;
+  margin-left: 190px;
 }

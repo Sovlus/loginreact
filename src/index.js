@@ -5,6 +5,8 @@ import App from './App';
 import Login from './Login';
 import SignUp from './signup';
 import Switch from './switch';
+import '@fortawesome/fontawesome-free/css/all.css';
+
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
